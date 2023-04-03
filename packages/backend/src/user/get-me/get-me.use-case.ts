@@ -9,7 +9,8 @@ export class GetMeUseCase {
 
   @GetMeRoute()
   async execute(): Promise<GetMeResponse> {
-    const user = await this.prisma.user.findFirst();
+    const id = 1;
+    const user = await this.prisma.user.findUnique({ where: { id } });
     return user;
   }
 }

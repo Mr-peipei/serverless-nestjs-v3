@@ -4,23 +4,22 @@ import {
   GetTaskResponse,
   GetTaskRoute,
 } from "src/generated/task";
+import { PrismaService } from "src/lib/prisma.service/prisma.service";
 
 @Controller()
 @Injectable()
 export class GetTaskUseCase {
   private readonly logger = new Logger(GetTaskUseCase.name);
 
+  constructor(private prisma: PrismaService) {}
+
   @GetTaskRoute()
   async execute(@Param() param: GetTaskParam): Promise<GetTaskResponse> {
     this.logger.log({ param });
 
-    return {
-      taskId: 1,
-      taskName: "XXXX",
-      createdTime: "2022-03-17T00:00:00.000Z",
-      notification: true,
-      taskStatus: "todo",
-      estimatedTime: 120,
-    };
+    const id = 1;
+    const task = await this.prisma.task.findUnique({ where: { taskId: id } });
+
+    return task;
   }
 }

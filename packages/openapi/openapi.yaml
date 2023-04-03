@@ -166,8 +166,8 @@ components:
       type: string
       enum:
         - todo
-        - in-progress
-        - in-review
+        - inProgress
+        - inReview
         - done
     TaskName:
       title: TaskStatus
@@ -217,6 +217,7 @@ components:
               - taskName
               - taskStatus
               - notification
+      description: ""
   parameters: {}
 security:
   - ID Token: []
