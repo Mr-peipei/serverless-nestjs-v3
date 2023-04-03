@@ -117,22 +117,25 @@ paths:
       description: タスクを更新するAPIです。
       requestBody:
         $ref: "#/components/requestBodies/Task"
+  /password: {}
 components:
   schemas:
     Id:
       title: Id
-      type: string
-      minLength: 1
-      maxLength: 64
-      pattern: ^[0-9A-Za-z-]+$
+      type: integer
     User:
       title: User
       type: object
       properties:
-        userId:
+        id:
           $ref: "#/components/schemas/Id"
+        email:
+          type: string
+        name:
+          type: string
       required:
-        - userId
+        - id
+        - email
     Task:
       title: Task
       type: object

@@ -15,7 +15,7 @@ export class PostTaskUseCase {
     this.logger.log({ body });
 
     return {
-      taskId: "XXXX",
+      taskId: 1,
       taskName: "XXXX",
       createdTime: "2022-03-17T00:00:00.000Z",
       notification: true,
