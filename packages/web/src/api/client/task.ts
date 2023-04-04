@@ -135,7 +135,7 @@ export const usePostTask = <
  * タスクを取得するAPIです。
  * @summary タスク取得API
  */
-export const getTask = (taskId: string, signal?: AbortSignal) => {
+export const getTask = (taskId: number, signal?: AbortSignal) => {
   return customMutator<Task>({
     url: `/tasks/${taskId}`,
     method: "get",
@@ -143,7 +143,7 @@ export const getTask = (taskId: string, signal?: AbortSignal) => {
   });
 };
 
-export const getGetTaskQueryKey = (taskId: string) => [`/tasks/${taskId}`];
+export const getGetTaskQueryKey = (taskId: number) => [`/tasks/${taskId}`];
 
 export type GetTaskQueryResult = NonNullable<
   Awaited<ReturnType<typeof getTask>>
@@ -154,7 +154,7 @@ export const useGetTask = <
   TData = Awaited<ReturnType<typeof getTask>>,
   TError = ErrorType<NotFoundResponse>
 >(
-  taskId: string,
+  taskId: number,
   options?: {
     query?: UseQueryOptions<Awaited<ReturnType<typeof getTask>>, TError, TData>;
   }
@@ -183,7 +183,7 @@ export const useGetTask = <
  * タスクを削除するAPIです。
  * @summary タスク削除API
  */
-export const deleteTask = (taskId: string) => {
+export const deleteTask = (taskId: number) => {
   return customMutator<void>({ url: `/tasks/${taskId}`, method: "delete" });
 };
 
@@ -200,7 +200,7 @@ export const useDeleteTask = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof deleteTask>>,
     TError,
-    { taskId: string },
+    { taskId: number },
     TContext
   >;
 }) => {
@@ -208,7 +208,7 @@ export const useDeleteTask = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof deleteTask>>,
-    { taskId: string }
+    { taskId: number }
   > = (props) => {
     const { taskId } = props ?? {};
 
@@ -218,7 +218,7 @@ export const useDeleteTask = <
   return useMutation<
     Awaited<ReturnType<typeof deleteTask>>,
     TError,
-    { taskId: string },
+    { taskId: number },
     TContext
   >(mutationFn, mutationOptions);
 };
@@ -226,7 +226,7 @@ export const useDeleteTask = <
  * タスクを更新するAPIです。
  * @summary タスク更新API
  */
-export const putTask = (taskId: string, taskBody: TaskBody) => {
+export const putTask = (taskId: number, taskBody: TaskBody) => {
   return customMutator<Task>({
     url: `/tasks/${taskId}`,
     method: "put",
@@ -248,7 +248,7 @@ export const usePutTask = <
   mutation?: UseMutationOptions<
     Awaited<ReturnType<typeof putTask>>,
     TError,
-    { taskId: string; data: TaskBody },
+    { taskId: number; data: TaskBody },
     TContext
   >;
 }) => {
@@ -256,7 +256,7 @@ export const usePutTask = <
 
   const mutationFn: MutationFunction<
     Awaited<ReturnType<typeof putTask>>,
-    { taskId: string; data: TaskBody }
+    { taskId: number; data: TaskBody }
   > = (props) => {
     const { taskId, data } = props ?? {};
 
@@ -266,7 +266,7 @@ export const usePutTask = <
   return useMutation<
     Awaited<ReturnType<typeof putTask>>,
     TError,
-    { taskId: string; data: TaskBody },
+    { taskId: number; data: TaskBody },
     TContext
   >(mutationFn, mutationOptions);
 };

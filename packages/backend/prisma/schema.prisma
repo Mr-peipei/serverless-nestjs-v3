@@ -22,7 +22,7 @@ model Task {
   taskName     String
   taskStatus   TaskStatus
   notification Boolean @default(false)
-  createdTime  String
+	createdTime     DateTime? @default(now())
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
