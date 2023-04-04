@@ -11,25 +11,25 @@ datasource db {
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
+  id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
   tasks Task[]
 }
 
 model Task {
-  taskId        Int      @default(autoincrement()) @id
+  taskId       Int        @id @default(autoincrement())
   taskName     String
   taskStatus   TaskStatus
-  notification Boolean @default(false)
-	createdTime     DateTime? @default(now())
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  notification Boolean    @default(false)
+  createdTime  DateTime?  @default(now())
+  author       User?      @relation(fields: [authorId], references: [id])
+  authorId     Int?
 }
 
 enum TaskStatus {
-	todo 
-	inProgress  
-	inReview  
-	done   
+  todo
+  inProgress
+  inReview
+  done
 }
