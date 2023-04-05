@@ -1,13 +1,16 @@
-import { Controller, Injectable, Logger, Param } from "@nestjs/common";
+import { Controller, Injectable, Param } from "@nestjs/common";
 import { DeleteTaskRoute, DeleteTaskParam } from "src/generated/task";
+import { PrismaService } from "src/lib/prisma.service/prisma.service";
 
 @Controller()
 @Injectable()
 export class DeleteTaskUseCase {
-  private readonly logger = new Logger(DeleteTaskUseCase.name);
+  constructor(private prisma: PrismaService) {}
 
   @DeleteTaskRoute()
   async execute(@Param() param: DeleteTaskParam): Promise<void> {
-    this.logger.log({ param });
+    await this.prisma.task.delete({
+      where: { taskId: param.taskId },
+    });
   }
 }

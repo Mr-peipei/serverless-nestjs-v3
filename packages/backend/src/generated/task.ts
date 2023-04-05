@@ -42,7 +42,7 @@ export class PostTaskException extends ApiException<never> {}
 export const GetTaskPath = "/tasks/:taskId";
 export const GetTaskRoute = () => Get(GetTaskPath);
 export type GetTaskParam = {
-  taskId: string;
+  taskId: number;
 };
 export type GetTaskResponse = Task;
 export class GetTaskException extends ApiException<NotFoundResponse["code"]> {}
@@ -54,7 +54,7 @@ export class GetTaskException extends ApiException<NotFoundResponse["code"]> {}
 export const DeleteTaskPath = "/tasks/:taskId";
 export const DeleteTaskRoute = () => Delete(DeleteTaskPath);
 export type DeleteTaskParam = {
-  taskId: string;
+  taskId: number;
 };
 export type DeleteTaskResponse = void;
 export class DeleteTaskException extends ApiException<never> {}
@@ -66,7 +66,7 @@ export class DeleteTaskException extends ApiException<never> {}
 export const PutTaskPath = "/tasks/:taskId";
 export const PutTaskRoute = () => Put(PutTaskPath);
 export type PutTaskParam = {
-  taskId: string;
+  taskId: number;
 };
 export type PutTaskBody = TaskBody;
 export type PutTaskResponse = Task;

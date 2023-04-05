@@ -8,5 +8,7 @@
 import type { Id } from "./id";
 
 export interface User {
-  userId: Id;
+  id: Id;
+  email: string;
+  name?: string;
 }

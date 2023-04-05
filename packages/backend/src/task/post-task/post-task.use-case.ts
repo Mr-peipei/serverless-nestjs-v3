@@ -1,26 +1,29 @@
-import { Body, Controller, Injectable, Logger } from "@nestjs/common";
+import { Body, Controller, Injectable } from "@nestjs/common";
 import {
   PostTaskBody,
   PostTaskResponse,
   PostTaskRoute,
 } from "src/generated/task";
+import { PrismaService } from "src/lib/prisma.service/prisma.service";
 
 @Controller()
 @Injectable()
 export class PostTaskUseCase {
-  private readonly logger = new Logger(PostTaskUseCase.name);
+  constructor(private prisma: PrismaService) {}
 
   @PostTaskRoute()
   async execute(@Body() body: PostTaskBody): Promise<PostTaskResponse> {
-    this.logger.log({ body });
+    const res = await this.prisma.task.create({
+      data: {
+        taskName: body.taskName,
+        taskStatus: body.taskStatus,
+        notification: body.notification,
+      },
+    });
 
     return {
-      taskId: "XXXX",
-      taskName: "XXXX",
-      createdTime: "2022-03-17T00:00:00.000Z",
-      notification: true,
-      taskStatus: "todo",
-      estimatedTime: 120,
+      ...res,
+      createdTime: res.createdTime.toISOString(),
     };
   }
 }

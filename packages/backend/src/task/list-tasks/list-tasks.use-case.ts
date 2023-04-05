@@ -1,30 +1,29 @@
-import { Controller, Injectable, Logger, Query } from "@nestjs/common";
+import { Controller, Injectable, Query } from "@nestjs/common";
 import {
   ListTasksQuery,
   ListTasksResponse,
   ListTasksRoute,
 } from "src/generated/task";
+import { PrismaService } from "src/lib/prisma.service/prisma.service";
 
 @Controller()
 @Injectable()
 export class ListTasksUseCase {
-  private readonly logger = new Logger(ListTasksUseCase.name);
+  constructor(private prisma: PrismaService) {}
 
   @ListTasksRoute()
   async execute(@Query() query: ListTasksQuery): Promise<ListTasksResponse> {
-    this.logger.log({ query });
+    const tasks = await this.prisma.task.findMany({
+      take: query.limit,
+    });
 
     return {
-      items: [
-        {
-          taskId: "XXXX",
-          taskName: "XXXX",
-          createdTime: "2022-03-17T00:00:00.000Z",
-          notification: true,
-          taskStatus: "todo",
-          estimatedTime: 120,
-        },
-      ],
+      items: tasks.map((item) => {
+        return {
+          ...item,
+          createdTime: item.createdTime.toISOString(),
+        };
+      }),
     };
   }
 }
